@@ -1,5 +1,4 @@
-# leewan-fortress
-# Linux堡垒机
+# leewan-fortress Linux堡垒机
 
 # 一：提供以下功能 
 
@@ -33,4 +32,6 @@
 2、默认端口9010，如需修改,在bootstrap.yml文件中修改server.port即可
 
 
-初次启动，系统会默认创建一个admin/123456的超级管理员
+# 初次启动
+
+系统会默认创建一个admin/123456的超级管理员
