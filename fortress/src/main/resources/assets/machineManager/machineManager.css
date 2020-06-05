@@ -1,0 +1,31 @@
+#generalMG .el-table td, .el-table th{
+	padding: 4px 0;
+}
+
+.el-table td, .el-table th.is-leaf{
+    border-bottom: 1px solid #bbbbbb;	
+}
+
+.el-table--border th{
+    border-right: 1px solid #bbbbbb;	
+}
+
+.el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed{
+    border-right: 1px solid #bbbbbb;	
+}
+.el-table--border, .el-table--group{
+    border: 1px solid #bbbbbb;
+}
+
+
+.el-dialog{
+    position: absolute;
+    margin: 0px !important;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+}
+
+.operateBtn{
+	
+}

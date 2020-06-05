@@ -1,0 +1,128 @@
+eureka:
+  client:
+    availability-zones:
+      honghu: honghuZone
+    fetch-registry: false
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://jiangsuxrd:jiangsuxrd@192.168.0.58:8761/eureka/
+      honghuZone: http://jiangsuxrd:jiangsuxrd@192.168.0.58:8761/eureka/
+  instance:
+    hostname: localhost
+    metadataMap:
+      password:
+        security:
+          user:
+            password: ''
+      user: honghu
+      zone: honghuZone
+    prefer-ip-address: true
+hik:
+  api:
+    appkey: d5688df9
+    op_user_uuid: cc78be40ec8611e78168af26905e6f0f
+    secret: 50873c187ed2452ea1439533ac41bd33
+    url: http://172.16.100.102
+management:
+  security:
+    enabled: false
+mybatis:
+  configLocation: classpath:mybatis.xml
+  mapperLocations: classpath:mapper/**/*.xml
+security:
+  basic:
+    enabled: true
+  user:
+    name: honghu
+    password: 123456
+server:
+  context-path: /commonservice-system
+  port: 8081
+  tomcat:
+    max-threads: 1000
+    min-spare-threads: 30
+    uri-encoding: UTF-8
+spring:
+  application:
+    name: commonservice-system
+  datasource:
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    druid:
+      filter:
+        stat:
+          log-slow-sql: true
+          merge-sql: true
+          slow-sql-millis: 1000
+        wall:
+          config:
+            multi-statement-allow: true
+      first:
+        password: root
+        url: jdbc:oracle:thin:@192.168.0.145:1521/orcl.localdomain
+        username: root
+        driverClassName: oracle.jdbc.driver.OracleDriver
+      initial-size: 10
+      max-active: 100
+      max-pool-prepared-statement-per-connection-size: 20
+      max-wait: 60000
+      min-evictable-idle-time-millis: 300000
+      min-idle: 10
+      pool-prepared-statements: true
+      second:
+        password: root
+        url: jdbc:oracle:thin:@192.168.0.145:1521/orcl.localdomain
+        username: root
+        driverClassName: oracle.jdbc.driver.OracleDriver
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      validation-query: SELECT 1 FROM DUAL
+    type: com.alibaba.druid.pool.DruidDataSource
+  devtools:
+    restart:
+      enabled: false
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  mvc:
+    view:
+      static-path-pattern: /**
+      suffix: .html
+  profiles:
+    active: dev
+  redis:
+    database: 0
+    host: localhost
+    open: false
+    password: ''
+    pool:
+      max-active: 1000
+      max-idle: 10
+      max-wait: -1
+      min-idle: 5
+    port: 16379
+    timeout: 6000
+  resources:
+    static-locations: classpath:/static/,classpath:/views/,file:D://User/
+  thymeleaf:
+    enabled: false
+    
+oauth2:
+  client:
+    accessTokenUri: ${oauth2.server}/oauth/token
+    clientId: basic_manager_platform
+    clientSecret: basic_secret
+    grant-type: authorization_code,refresh_token
+    userAuthorizationUri: ${oauth2.server}/oauth/authorize
+  resource:
+    userInfoUri: ${oauth2.server}/resource/user/me
+  server: http://192.168.0.58:8080

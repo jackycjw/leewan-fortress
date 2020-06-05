@@ -1,0 +1,66 @@
+#fileList{
+	padding: 10px 10px;
+}
+
+.path{
+	position: fixed;
+	z-index: 1000
+}
+
+.el-table td, .el-table th{
+    padding: 5px 0;
+}
+
+.icon-folder {
+    width: 20px;
+    height: 20px;
+    float: left;
+}
+
+.file_name{
+    line-height: 20px;
+    display: inline-block;
+    float: left;
+    margin-left: 5px;	
+}
+
+.main{
+    position: absolute;
+    left: 400px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;	
+}
+
+.aside{
+    border-right: 1px dotted;
+    position: fixed;
+}
+
+.menu__item {
+	display: block;
+	line-height: 20px;
+	text-align: left;
+	margin:10px;
+	cursor: default;
+}
+.menu__item:hover{
+	color: #FF0000;
+}
+
+.menu {
+ 	height: auto;
+ 	width: auto;
+ 	position: absolute;
+ 	font-size: 14px;
+ 	text-align: left;
+ 	border-radius: 10px;
+ 	border: 1px solid #c1c1c1;
+ 	background-color: #ffffff;
+ 	padding: 0;
+}
+
+li:hover {
+  background-color: #E0E0E2;
+  color: white;
+}

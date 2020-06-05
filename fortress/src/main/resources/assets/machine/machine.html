@@ -1,0 +1,63 @@
+<div id="machine" container-name="machine">
+
+	<div style="margin-top: 30px;">
+	
+		<el-table :data="machineList" stripe fit border 
+			:span-method="mergeSpan"
+			style="width: 100%;" v-loading="loading">
+		    <el-table-column
+		      prop="hostname"
+		      label="主机名称"
+		      width="180">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="host"
+		      label="地址">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="user"
+		      label="用户">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="create_user"
+		      label="远程操作">
+		      <template slot-scope="scope">
+		      	<el-button type="primary" class="el-icon-s-platform" @click="openSSH(scope.row)">SSH</el-button>
+		      	<el-button type="success" class="el-icon-upload" @click="openSFTP(scope.row)">SFTP</el-button>
+		      	
+              </template>
+		    </el-table-column>
+		    
+		  </el-table>
+		  
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>

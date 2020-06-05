@@ -1,0 +1,135 @@
+<div id=userManager container-name="userManager">
+	<el-input
+		  placeholder="用户名"
+		  v-model="code"
+		  class="form_input"
+		  @keyup.enter.native="queryUserList"
+		  clearable>
+		</el-input>
+		
+	<el-input
+	  placeholder="姓名"
+	  class="form_input"
+	  @keyup.enter.native="queryUserList"
+	  v-model="name"
+	  clearable>
+	</el-input>
+	
+	<el-button type="primary" style="width: 10%;" 
+	@click="managerUser.state.dialogUserVisible=true" icon="el-icon-user-solid">新增人员</el-button>
+	
+	<div>
+		<el-table :data="userList" stripe fit border style="width: 100%;" v-loading="loading">
+		    <el-table-column
+		      prop="code"
+		      label="用户名"
+		      width="180">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="name"
+		      label="姓名">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="roleName"
+		      label="角色">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      label="状态">
+		      <template slot-scope="scope">
+		      	<span v-if="scope.row.status==1">正常</span>
+		      	<span v-else style="color: red">禁用</span>
+              </template>
+		    </el-table-column>
+		    
+		     <el-table-column
+		      width="550"
+		      label="操作">
+		      <template slot-scope="scope">
+		      	<el-col :span="6">
+		      		<el-button type="primary" @click="distributeMachine(scope.row)" 
+		      		class="el-icon-s-platform operateBtn">分配机器</el-button>
+		      	</el-col>
+		      	<el-col :span="6">
+		      		<el-popover
+					  placement="right"
+					  class="operateBtn"
+					  trigger="click">
+					  	<el-radio v-for="item in managerUser.state.roleList" 
+					  		@change="modifyRole"
+					  		v-model="scope.row.roleId" :label="item.id">{{item.name}}</el-radio>
+					  		
+						<el-button slot="reference" @click="distributeRole(scope.row)" type="success" 
+						  	class="el-icon-user-solid">分配角色</el-button>
+					</el-popover>
+		      	</el-col>
+		      	<el-col :span="6">
+		      		<el-button type="warning" 
+				      	class="el-icon-user-solid operateBtn"
+				      	v-if="scope.row.status==1"
+				      	@click="changeStatus(scope.row)"
+				      	 >
+				      	禁用用户
+				      </el-button>
+				      <el-button type="success" 
+				      	class="el-icon-user-solid operateBtn"
+				      	v-else="scope.row.status==1" 
+				      	@click="changeStatus(scope.row)"
+				      	>
+				      	启用用户
+				      </el-button>
+		      	</el-col>
+		      	<el-col :span="6">
+		      		<el-button type="danger" 
+				      	class="el-icon-delete operateBtn"
+				      	@click="delUser(scope.row)"
+				      	>
+				      	删除用户
+				      </el-button>
+		      	</el-col>
+              </template>
+		    </el-table-column>
+		  </el-table>
+		  
+		  
+		  <el-dialog
+			  width="70%"
+			  :visible.sync="managerUser.state.dialogVisible">
+			  <distribute-machine></distribute-machine>
+		  </el-dialog>
+		  
+		  <el-dialog
+			  width="40%"
+			  :visible.sync="managerUser.state.dialogUserVisible">
+			  <add-user></add-user>
+		  </el-dialog>
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>

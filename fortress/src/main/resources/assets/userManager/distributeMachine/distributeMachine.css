@@ -1,0 +1,42 @@
+#generalMG .el-table td, .el-table th{
+	padding: 4px 0;
+}
+
+.el-table td, .el-table th.is-leaf{
+    border-bottom: 1px solid #bbbbbb;	
+}
+
+.el-table--border th{
+    border-right: 1px solid #bbbbbb;	
+}
+
+.el-table--border td, .el-table--border th, .el-table__body-wrapper .el-table--border.is-scrolling-left~.el-table__fixed{
+    border-right: 1px solid #bbbbbb;	
+}
+.el-table--border, .el-table--group{
+    border: 1px solid #bbbbbb;
+}
+
+.el-table .unauth{
+}
+
+.el-table .unauth .cell{
+	color: #f56c6c;
+}
+
+.el-table .auth{
+}
+
+.el-table .auth .cell{
+	color: #3a8ee6
+}
+
+#userManager .title{
+    font-size: 16px;
+    font-weight: bold;
+    color: #ff3697;
+}
+
+#userManager .el-dialog__header{
+	display: none;
+}

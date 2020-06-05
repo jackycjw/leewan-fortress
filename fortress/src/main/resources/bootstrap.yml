@@ -1,0 +1,20 @@
+server:
+  port: 9010
+  
+logging: 
+  level:
+    root: info
+    org.springframework.security: info
+
+
+mybatis:
+  mapper-locations: classpath*:dao/**/*.xml
+  type-aliases-package: com.leewan.dao
+
+spring: 
+  resources:
+    static-locations: classpath:/bundles/
+  http:
+    multipart:
+      max-file-size: 2147483647
+      max-request-size: 2147483647

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Tue Apr 02 11:11:58 CST 2013-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leewan.dao.audit.AuditDao">
+	
+	<resultMap type="map" id="auditList">
+		<result column="id" property="id"/>
+		<result column="name" property="name"/>
+		<result column="hostname" property="hostname"/>
+		<result column="host" property="host"/>
+		<result column="system_type" property="systemType"/>
+		<result column="start_time" property="startTime" typeHandler="com.leewan.util.mybatis.StringDateTypeHandler"/>
+		<result column="end_time" property="endTime" typeHandler="com.leewan.util.mybatis.StringDateTypeHandler"/>
+	</resultMap>
+	
+	<select id="queryAudits" parameterType="java.util.Map" resultMap="auditList">
+		SELECT 
+		oa.id, u.name, m.hostname, m.host, m.system_type, oa.start_time, oa.end_time
+		from leewan_operate_audit oa
+		LEFT JOIN leewan_users u on u.id=oa.user_id
+		LEFT JOIN leewan_machine_user mu on oa.machine_user_id=mu.id
+		LEFT JOIN leewan_machine m on m.id=mu.machine_id
+		<where>
+			<if test="username != null and username != ''">
+				and u.name like '%'|| #{username} ||'%'
+			</if>
+			<if test="hostname != null and hostname != ''">
+				and m.hostname like '%'|| #{hostname} ||'%'
+			</if>
+			<if test="host != null and host != ''">
+				and m.host like '%'|| #{host} ||'%'
+			</if>
+			<if test="startTime != null and startTime != ''">
+				and oa.start_time &gt;= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and oa.start_time &lt;= #{endTime}
+			</if>
+		</where>
+		ORDER BY oa.start_time desc
+	</select>
+
+</mapper>

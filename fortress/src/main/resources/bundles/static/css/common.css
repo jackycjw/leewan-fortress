@@ -1,0 +1,238 @@
+body{
+    margin: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+}
+
+li a{
+	cursor: pointer;	
+}
+
+
+.pageContent{
+	margin-top: 10px;
+    padding: 5px 21px;
+}
+
+.el-menu--horizontal>.el-submenu .el-submenu__title{
+	height: 45px;
+    line-height: 45px;
+}
+
+.el-menu--horizontal>.el-menu-item{
+	height: 45px;
+    line-height: 45px;
+}
+
+.range-input{
+	width: 45%;
+}
+
+.condition{
+	border-bottom: 1px #979797 dashed;
+    border-right: 1px #979797 dashed;	
+}
+
+.condition .rowLine{
+	border-top: 1px #979797 dashed;
+    height: 30px;
+    border-left: 1px #979797 dashed;
+    padding: 0px;
+}
+
+.rowLine .lable{
+    width: 15%;
+    /* display: inline-block; */
+    height: 30px;
+    line-height: 30px;
+    background: #3f51b529;
+    padding: 0px;
+    float: left;
+    color: #636363;
+    text-align: center;
+}
+
+.rowLine .conditionVal{
+    width: 70%;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+}
+
+.condition .rowLine input{
+    border: none;
+    height: 28px;
+    line-height: 28px;
+}
+
+.el-table .cell a{
+    color: #2340f7;
+    cursor: pointer;
+}
+
+.dialog-right .el-dialog {
+    position: absolute;
+    top: 0;
+    left: 150px;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+    width: auto;
+}
+.dialog-right.dialog-left .el-dialog {
+    right: 150px;
+    left: 0;
+}
+
+.dialog-right .el-dialog__header {
+    background: #36546e;
+    padding: 10px 20px;
+    line-height: 24px !important;
+    /*position: fixed;*/
+    /*top: 0;*/
+    /*left: 150px;*/
+    /*right: 0;*/
+    /*z-index: 999;*/
+}
+
+.dialog-right .el-dialog__header .el-dialog__title {
+    color: #fff;
+    line-height: 24px !important;
+}
+
+.dialog-right .el-dialog__header .el-dialog__headerbtn {
+    width: 44px;
+    height: 44px;
+    top: 0;
+    right: 0;
+    background: #8ea0ac;
+}
+
+.dialog-right .el-dialog__header .el-dialog__headerbtn:hover {
+    background: #2659ae;
+}
+
+.dialog-right .el-dialog__header .el-dialog__headerbtn .el-dialog__close {
+    color: #fff;
+}
+
+.dialog-right .el-dialog__footer {
+    position: fixed;
+    bottom: 0;
+    left: 150px;
+    right: 0;
+}
+.dialog-right.dialog-left .el-dialog__footer {
+    position: fixed;
+    bottom: 0;
+    right: 150px;
+    left: 0;
+}
+
+.dialog-right .el-dialog__body {
+    padding: 10px 10px 10px 10px;
+    background: #fff;
+    max-height: calc(100vh - 47px);
+    overflow-y:auto;
+}
+
+.fresh-flag{
+    font-size: 23px;
+    position: absolute;
+    z-index: 999;
+    right: 2%;
+    top: 45%;
+    padding: 3px;
+    border: 1px solid;
+    cursor: pointer;
+}
+
+.spanSelected{
+	color: #F00 !important;
+}
+
+.span-select{
+	color: #9a9aa3;
+    cursor: pointer;
+    margin-left: 30px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.leewan-pannel{
+	
+}
+
+.leewan-pannel .title{
+    height: 30px;
+    border-bottom: 1px solid #c8c8c8;
+}
+
+.leewan-pannel .title div{
+	width: 10px;
+    background-color: #2196F3;
+    height: 20px;
+    float: left;
+    line-height: 30px;
+    margin-top: 5px;
+}
+
+.leewan-pannel .title span{
+    height: 20px;
+    line-height: 30px;
+    display: inline-block;
+    margin-left: 8px;
+    color: #424242;
+    font-weight: bold;	
+}
+
+.leewan-pannel .title i{
+	float: right;
+    color: #3965e5;
+    font-weight: bold;
+    height: 20px;
+    margin-top: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.leewan-pannel .body{
+    padding: 15px 10px;
+}
+
+
+.cell button{
+	padding: 4px 20px;
+}
+
+.el-card__header{
+    padding: 10px 20px;
+}
+
+.el-collapse-item__header{
+	color: #909090;
+	font-weight: bold;
+}
+.el-collapse-item__header.is-active{
+	color: #000;
+}
+
+
+.float{
+	position: fixed;
+    right: 0px;
+    top: 30%;
+    z-index: 1000
+}
+
+.right_align_title{
+	display: inline-block;
+    width: 22%;
+    text-align: right;
+    padding-right: 12px;
+    font-weight: bold;
+    color: #2992ff;
+    
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>leewan堡垒机</title>
+    <script type="text/javascript" src="/static/jquery/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/static/vue/vue.min.js"></script>
+    <script type="text/javascript" src="/static/vue/vuex.js"></script>
+    <script type="text/javascript" src="/static/elementUI/element.min.js"></script>
+    <script type="text/javascript" src="/static/leewan-common.js"></script>
+    <script type="text/javascript" src="/static/leewan-router.js"></script>
+    <script type="text/javascript" src="/static/store.js"></script>
+    <script type="text/javascript" src="/static/vueExtend.js"></script>
+    
+    <link rel="stylesheet" href="/static/elementUI/element.min.css">
+    <link rel="stylesheet" href="/static/css/common.css">
+</head>
+<body>
+    <div id="loginApp">
+    	<el-container>
+		  <el-main>
+		  	<el-row>
+		  	<el-col :span="10" :gutter="50" :offset="7" class="line">
+			  <el-input placeholder="输入用户名" v-model="code">
+			  </el-input>
+			</el-col>
+			</el-row>
+			
+			<el-row>
+			<el-col :span="10" :gutter="50" :offset="7" class="line">
+			  <el-input placeholder="请输入密码" v-model="password" type="password">
+			  </el-input>
+			</el-col>
+			</el-row>
+			
+			<el-row>
+			<el-col :span="10" :gutter="50" :offset="7" class="line">
+			  <el-button type="success" :loading="loading" @click="login" style="width:100%">
+			  	登
+			  	&nbsp;&nbsp;&nbsp;&nbsp;
+			  	录
+			  </el-button>
+			</el-col>
+			</el-row>
+			</el-col>
+		  </el-main>
+		</el-container>
+		<el-footer>
+			<el-col :span="20" :gutter="50" :offset="2" class="line">
+				<p>@Copyright Leewan通信公司</p>
+			</el-col>
+		</el-footer>
+    </div>
+</body>
+
+</html>
+

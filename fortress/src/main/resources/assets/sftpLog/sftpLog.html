@@ -1,0 +1,107 @@
+<div id="sftpLog" container-name="sftpLog">
+	
+	<el-input
+	  placeholder="用户名"
+	  v-model="username"
+	  class="form_input"
+	  @keyup.enter.native="querySftpLogs"
+	  clearable>
+	</el-input>
+	
+	<el-select v-model="type" 
+	class="form_input" 
+	clearable 
+	@change="querySftpLogs"
+	placeholder="选择操作类型">
+	    <el-option
+	      v-for="item in types"
+	      :key="item.value"
+	      :label="item.label"
+	      :value="item.value">
+	    </el-option>
+	 </el-select>	
+	
+	<el-date-picker
+      v-model="timeRange"
+      type="datetimerange"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      :default-time="['00:00:00','23:59:59']"
+      @change="querySftpLogs"
+      >
+    </el-date-picker>
+    
+	<div>
+		<el-table :data="logList" stripe fit border 
+			style="width: 100%;" v-loading="loading">
+		    <el-table-column
+		      prop="name"
+		      label="操作用户"
+		      width="90">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="hostname"
+		      label="主机名称">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="host"
+		      label="主机地址">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="path"
+		      label="路径"
+		      min-width="250">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      label="类型">
+		      <template slot-scope="scope">
+		      	{{formateType(scope.row)}}
+              </template>
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="time"
+		      label="操作时间">
+		    </el-table-column>
+		  </el-table>
+		  
+		 <el-pagination
+		    layout="prev, pager, next"
+		    :total="page.total"
+		    :page-size="page.pageSize"
+		    :current-page="page.pageIndex"
+		    @current-change="pageChanged"
+		    >
+		  </el-pagination>
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>

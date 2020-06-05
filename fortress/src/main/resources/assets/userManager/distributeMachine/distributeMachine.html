@@ -1,0 +1,71 @@
+<script type="text/x-template" id="distributeMachine">
+<div id="distributeMachine">
+	<span class="title">{{dilogTitle}}</span>
+	<div style="margin-top: 30px;">
+		<el-table :data="machineList" fit border 
+			style="width: 100%;" v-loading="loading"
+			:row-class-name="lineclass"
+			>
+		    <el-table-column
+		      prop="hostname"
+		      label="主机名称"
+		      width="180">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="host"
+		      label="地址">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="user"
+		      label="用户">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="create_user"
+		      label="状态">
+		      <template slot-scope="scope">
+		      	<span v-if="scope.row.user_id != null">已授权</span>
+				<span v-else>未授权</span>
+              </template>
+		    </el-table-column>
+		    <el-table-column
+		      prop="create_user"
+		      label="操作">
+		      <template slot-scope="scope">
+				<el-button type="warning" v-if="scope.row.user_id != null" @click="disableMachine(scope.row)">禁用</el-button>
+				<el-button type="primary" v-else @click="ableMachine(scope.row)">授权</el-button>
+              </template>
+		    </el-table-column>
+		  </el-table>
+		  
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>
+</script>

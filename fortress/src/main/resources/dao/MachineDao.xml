@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Tue Apr 02 11:11:58 CST 2013-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leewan.dao.machine.MachineDao">
+	
+	<resultMap type="Map" id="moduleMap">
+		<result column="ID" property="id"/>
+		<result column="CODE" property="code"/>
+		<result column="NAME" property="name"/>
+		<result column="NODE_TYPE" property="node_type"/>
+		<result column="PID" property="pid"/>
+		<result column="DESCRIPTION" property="description"/>
+	</resultMap>
+	
+	<select id="queryUserMachineUserList" resultType="java.util.Map">
+		SELECT m.id,mu.id machineUserId ,m.host,m.hostname,m.system_type, mu.user FROM leewan_machine m LEFT JOIN leewan_machine_user mu 
+		on m.id=mu.machine_id
+		LEFT JOIN leewan_user_machine_user umu on  umu.machine_user_id=mu.id
+		where umu.user_id=#{userId}
+		<if test="hostname != null and hostname != ''">
+			and m.hostname like '%'|| #{hostname}  || '%'
+		</if>
+		<if test="host != null and host != ''">
+			and m.host like '%'||#{host}||'%'
+		</if>
+		<if test="user != null and user != ''">
+			and mu.user like '%'||#{user}||'%'
+		</if>
+	</select>
+	
+	
+	<select id="queryMachines" resultType="java.util.Map">
+		SELECT m.id,m.host,m.hostname,m.system_type, m.remote_port FROM leewan_machine m
+		<where>
+			<if test="hostname != null and hostname != ''">
+				and m.hostname like '%'|| #{hostname}  || '%'
+			</if>
+			<if test="host != null and host != ''">
+				and m.host like '%'||#{host}||'%'
+			</if>
+		</where>
+	</select>
+	
+	<update id="updateMachine">
+		update leewan_machine 
+		<set>
+			<if test="hostname != null and hostname != ''">
+				hostname = #{hostname},
+			</if>
+			<if test="host != null and host != ''">
+				host = #{host},
+			</if>
+			<if test="remote_port != null and remote_port != ''">
+				remote_port = #{remote_port},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<insert id="addMachine">
+		INSERT INTO leewan_machine (id, host, remote_port, system_type, hostname) 
+		VALUES (#{id}, #{host}, #{remote_port}, 1, #{hostname})
+	</insert>
+	<delete id="delMachine">
+		delete from leewan_machine where id=#{id}
+	</delete>
+	
+	<select id="queryMachineUser" resultType="map">
+		SELECT mu.* from leewan_machine_user mu 
+		where mu.machine_id=#{id}
+		<if test="user != null and user != ''">
+			and mu.user like '%' || #{user} || '%'
+		</if>
+	</select>
+	
+	<insert id="addMachineUser">
+		INSERT INTO leewan_machine_user (id, machine_id, user, password) 
+		VALUES (#{id}, #{machineId}, #{user}, #{password})
+	</insert>
+	
+	<delete id="delMachineUser">
+		delete from leewan_machine_user where id=#{id}
+	</delete>
+	
+	<update id="updateMachineUser">
+		update leewan_machine_user 
+		<set>
+			<if test="user != null and user != ''">
+				user = #{user},
+			</if>
+			<if test="password != null and password != ''">
+				host = #{password},
+			</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	
+	
+	
+	<select id="distributeMachine" resultType="java.util.Map">
+		SELECT mu.id,m.host,m.hostname,m.system_type, mu.user , umu.user_id
+		FROM leewan_machine m 
+		LEFT JOIN leewan_machine_user mu 
+		on m.id=mu.machine_id
+		LEFT JOIN leewan_user_machine_user umu on umu.machine_user_id=mu.id and umu.user_id=#{userId}
+	</select>
+	
+	
+	<!-- <select id="getMachineConnection" resultType="java.util.Map">
+		SELECT m.host,m.remote_port,mu.user,mu.password from leewan_machine m INNER JOIN leewan_machine_user mu 
+		on mu.machine_id=m.id
+		where m.id=#{id}
+		and mu.user=#{user}
+	</select> -->
+	
+	<select id="getMachineConnection" resultType="java.util.Map">
+		SELECT mu.id, m.host,m.remote_port,mu.user,mu.password from leewan_machine_user mu INNER JOIN  leewan_machine m
+		on mu.machine_id=m.id
+		where mu.id=#{machineUserId}
+	</select>
+	
+	<delete id="delUserMachineUser" parameterType="java.util.Map">
+		DELETE from leewan_user_machine_user  where user_id=#{userId} and machine_user_id=#{machineUserId}
+	</delete>
+	
+	<insert id="addUserMachineUser" parameterType="java.util.Map">
+		INSERT INTO leewan_user_machine_user (user_id, machine_user_id) VALUES (#{userId},#{machineUserId})
+	</insert>
+	
+	
+	<insert id="addNewSessionAudit">
+		INSERT INTO leewan_operate_audit (id, user_id, machine_user_id, start_time, audit_file) 
+		VALUES (#{id}, #{userId}, #{machineUserId}, #{startTime}, #{auditFile})
+	</insert>
+	
+	<update id="updateSessionAuditEndTime">
+		update leewan_operate_audit set end_time = #{endTime} where id=#{id}
+	</update>
+	
+	<select id="querySessionAudits" resultType="map">
+		SELECT oa.id, u.name,m.hostname,m.host, mu.user, oa.start_time, oa.end_time from leewan_operate_audit oa
+		LEFT JOIN leewan_machine_user mu on oa.machine_user_id=mu.id
+		LEFT JOIN leewan_machine m on mu.machine_id=m.id
+		LEFT JOIN leewan_users u on u.id=oa.user_id
+		where oa.user_id=#{userId}
+	</select>
+	
+	<select id="getSessionAudit" resultType="map">
+		SELECT oa.id, u.name,m.hostname,m.host, mu.user, oa.start_time, oa.end_time ,oa.audit_file
+		from leewan_operate_audit oa
+		LEFT JOIN leewan_machine_user mu on oa.machine_user_id=mu.id
+		LEFT JOIN leewan_machine m on mu.machine_id=m.id
+		LEFT JOIN leewan_users u on u.id=oa.user_id
+		where oa.id=#{auditId}
+	</select>
+	
+</mapper>

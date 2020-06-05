@@ -1,0 +1,30 @@
+.aside{
+	width: 200px;
+	background-color:rgb(1, 120, 190);
+	position: fixed;
+	overflow: visible;
+	bottom: 0;
+	top:0
+}
+
+.container{
+	left: 200px;
+    right: 0px;
+    position: absolute;
+    
+}
+
+.cell{
+    color: #333;	
+}
+
+.form_input{
+	width: 30%;
+	margin-bottom: 20px;
+	margin-right: 20px
+}
+
+
+.el-input__inner{
+    border: 1px solid #bbbbbb
+}

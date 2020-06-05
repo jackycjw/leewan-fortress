@@ -1,0 +1,63 @@
+<script type="text/x-template" id="addUser">
+<div id="addUser" v-loading="loading">
+	<span class="title">新增用户</span>
+	<div style="margin-top: 30px;">
+		<el-row class="form_line">
+			<el-col :span="3">
+				<span class="form_attr">用户名<span style="color:red">*</span></span>
+			</el-col>
+			<el-col :span="12">
+				<el-input v-model="code" placeholder="用户名(英文和数字)"  maxlength="10"></el-input>
+			</el-col>
+		</el-row>
+		<el-row class="form_line">
+			<el-col :span="3">
+				<span class="form_attr">真实姓名</span>
+			</el-col>
+			<el-col :span="12">
+				<el-input v-model="name" placeholder="姓名"  maxlength="10"></el-input>
+			</el-col>
+		</el-row>
+		<el-row class="form_line">
+			<el-col :span="3">
+				<span class="form_attr">密码<span style="color:red">*</span></span>
+			</el-col>
+			<el-col :span="12">
+				<el-input v-model="password" show-password placeholder="密码(英文和数字)"  maxlength="16"></el-input>
+			</el-col>
+		</el-row>
+		<el-row class="form_line">
+			<el-col :span="24">
+				<el-button style="margin-left: 12%;width: 51%;margin-top: 20px;" type="primary" 
+					@click="addUser">新增</el-button>
+			</el-col>
+		</el-row>
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>
+</script>

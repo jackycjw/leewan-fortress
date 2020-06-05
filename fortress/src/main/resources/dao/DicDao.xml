@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Tue Apr 02 11:11:58 CST 2013-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leewan.dao.dic.DicDao">
+	
+	<resultMap type="java.util.Map" id="dicMap">
+		<result column="ID" property="id"/>
+		<result column="DIC_ID" property="dicId"/>
+		<result column="CODE" property="code"/>
+		<result column="VALUE" property="value"/>
+		<result column="REMARK" property="remark"/>
+		<result column="SEQ" property="seq"/>
+	</resultMap>
+	
+	<select id="queryDics" parameterType="java.util.Map" resultMap="dicMap">
+	SELECT di.id ID,di.dic_id DIC_ID,di.code CODE,di.value VALUE,di.remark REMARK,di.seq SEQ
+	from leewan_dic_items di INNER JOIN leewan_dic_attr da on di.dic_id=da.id
+	where da.code=#{dicNbr} order by di.seq 
+	</select>
+
+</mapper>

@@ -1,0 +1,100 @@
+<div id="systemConfig" container-name="systemConfig">
+		<el-row :gutter="20">
+			<el-col :span="4">
+			<el-input
+			  placeholder="负载名称"
+			  v-model="serviceName">
+			</el-input>
+			</el-col>
+			
+			<el-col :span="4">
+				<el-button type="primary" @click="queryServiceList" >查询</el-button>
+				<el-button type="success" @click="newLoadBalance" icon="el-icon-document-add">新建应用</el-button>
+			</el-col>
+		</el-row>
+	<div style="margin-top: 30px;">
+		<el-table :data="serviceList" stripe fit border style="width: 100%;" v-loading="loading">
+		    <el-table-column
+		      prop="name"
+		      label="应用名称"
+		      width="180">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="number"
+		      label="实例数量">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      sortable
+		      label="创建时间">
+		      <template slot-scope="scope">
+                 {{formatDateTime(scope.row.create_time)}}
+             </template>
+		      
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="create_user"
+		      label="创建者">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="update_time"
+		      label="修改时间">
+		      <template slot-scope="scope">
+                 {{formatDateTime(scope.row.update_time)}}
+             </template>
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="update_user"
+		      label="修改者">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      label="状态">
+			     <template slot-scope="scope">
+	                 {{translate('SERVICE_STATUS',scope.row.status)}}
+	             </template>
+		      
+		    </el-table-column>
+		    
+		    <el-table-column
+		      label="操作">
+		      <template slot-scope="scope">
+		      	<el-link @click="detail(scope.row)" type="warning">查看</el-link>
+		      	<el-link type="danger">删除</el-link>
+             </template>
+		    </el-table-column>
+		    
+		  </el-table>
+		  
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>

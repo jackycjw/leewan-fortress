@@ -1,0 +1,103 @@
+<div id="audit" container-name="audit">
+	
+	<el-input
+	  placeholder="用户名"
+	  v-model="username"
+	  class="form_input"
+	  @keyup.enter.native="queryAudits"
+	  clearable>
+	</el-input>
+		
+	<el-input
+	  placeholder="机器名称"
+	  class="form_input"
+	  @keyup.enter.native="queryAudits"
+	  v-model="hostname"
+	  clearable>
+	</el-input>
+	
+	<el-date-picker
+      v-model="timeRange"
+      type="datetimerange"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      :default-time="['00:00:00','23:59:59']"
+      @change="queryAudits"
+      >
+    </el-date-picker>
+    
+	<div>
+		<el-table :data="auditList" stripe fit border 
+			style="width: 100%;" v-loading="loading">
+		    <el-table-column
+		      prop="name"
+		      label="用户名"
+		      width="180">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="hostname"
+		      label="主机名称">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="host"
+		      label="主机地址">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="startTime"
+		      label="操作开始时间">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="endTime"
+		      label="操作结束时间">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="create_user"
+		      label="远程操作">
+		      <template slot-scope="scope">
+		      	<el-button type="primary" class="el-icon-s-platform" @click="playBack(scope.row)">回放</el-button>
+              </template>
+		    </el-table-column>
+		    
+		  </el-table>
+		  
+		 <el-pagination
+		    layout="prev, pager, next"
+		    :total="page.total"
+		    :page-size="page.pageSize"
+		    :current-page="page.pageIndex"
+		    @current-change="queryAudits"
+		    >
+		  </el-pagination>
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>

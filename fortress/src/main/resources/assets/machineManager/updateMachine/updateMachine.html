@@ -1,0 +1,62 @@
+<script type="text/x-template" id="updateMachine">
+<div id="updateMachine" v-loading="loading">
+	<div>
+		<el-row class="form_line">
+			<el-col :span="4">
+				<span class="form_attr">机器名称<span style="color:red">*</span></span>
+			</el-col>
+			<el-col :span="12">
+				<el-input v-model="managerMachine.state.machine.hostname" placeholder="机器名称"  maxlength="20"></el-input>
+			</el-col>
+		</el-row>
+		<el-row class="form_line">
+			<el-col :span="4">
+				<span class="form_attr">机器地址<span style="color:red">*</span></span>
+			</el-col>
+			<el-col :span="12">
+				<el-input v-model="managerMachine.state.machine.host" placeholder="机器地址"  maxlength="50"></el-input>
+			</el-col>
+		</el-row>
+		<el-row class="form_line">
+			<el-col :span="4">
+				<span class="form_attr">远程端口<span style="color:red">*</span></span>
+			</el-col>
+			<el-col :span="12">
+				<el-input v-model="managerMachine.state.machine.remote_port" placeholder="端口"  maxlength="5"></el-input>
+			</el-col>
+		</el-row>
+		<el-row class="form_line">
+			<el-col :span="24">
+				<el-button style="margin-left: 12%;width: 51%;margin-top: 20px;" type="primary" 
+					@click="updateMachine">修改</el-button>
+			</el-col>
+		</el-row>
+          
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>
+</script>

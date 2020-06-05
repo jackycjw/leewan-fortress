@@ -1,0 +1,100 @@
+<div id="machineManager" container-name="machineManager">
+	
+		<el-input
+		  placeholder="主机地址"
+		  v-model="host"
+		  class="form_input"
+		  @keyup.enter.native="queryMachineUserList"
+		  clearable>
+		</el-input>
+		
+	<el-input
+	  placeholder="主机名称"
+	  class="form_input"
+	  @keyup.enter.native="queryMachineUserList"
+	  v-model="hostname"
+	  clearable>
+	</el-input>
+	
+	<el-button type="primary" style="width: 10%;" 
+	@click="managerMachine.state.dialogAddMachineVisible=true" icon="el-icon-user-solid">新增机器</el-button>
+	
+	<div>
+	
+		<el-table :data="machineList" stripe fit border 
+			style="width: 100%;" v-loading="loading">
+		    <el-table-column
+		      prop="hostname"
+		      label="主机名称"
+		      width="180">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="host"
+		      label="地址">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="remote_port"
+		      label="远程端口">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="create_user"
+		      label="操作">
+		      <template slot-scope="scope">
+		        <el-button type="primary" class="el-icon-edit" @click="managerMachineUser(scope.row)">管理机器用户</el-button>
+		      	<el-button type="primary" class="el-icon-edit" @click="updateMachine(scope.row)">修改</el-button>
+		      	<el-button type="success" class="el-icon-delete" @click="delMachine(scope.row)">删除</el-button>
+		      	
+              </template>
+		    </el-table-column>
+		    
+		  </el-table>
+		  <el-dialog
+		  	  title="新增机器"
+			  width="40%"
+			  :visible.sync="managerMachine.state.dialogAddMachineVisible">
+			  <add-machine></add-machine>
+		  </el-dialog>		  
+          
+          <el-dialog
+		  	  title="更新机器"
+			  width="40%"
+			  :visible.sync="managerMachine.state.dialogUpdateMachineVisible">
+			  <update-machine></update-machine>
+		  </el-dialog>	
+          
+		  <el-drawer title="机器用户管理" 
+		  	size="50%"
+		  	:visible.sync="managerMachine.state.dialogManagerMachineUserVisible" 
+		  	:direction="direction">
+		  	<machine-user></machine-user>
+		  </el-drawer>
+	</div>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>

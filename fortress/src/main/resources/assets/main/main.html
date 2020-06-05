@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>leewan堡垒机</title>
+<script type="text/javascript" src="/static/jquery/jquery-3.0.0.js"></script>
+<script type="text/javascript" src="/static/vue/vue.min.js"></script>
+<script type="text/javascript" src="/static/vue/vuex.js"></script>
+<script type="text/javascript" src="/static/elementUI/element.min.js"></script>
+<script type="text/javascript" src="/static/leewan-common.js"></script>
+<script type="text/javascript" src="/static/leewan-router.js"></script>
+<script type="text/javascript" src="/static/store.js"></script>
+<script type="text/javascript" src="/static/vueExtend.js"></script>
+
+<link rel="stylesheet" href="/static/elementUI/element.min.css">
+<link rel="stylesheet" href="/static/css/common.css">
+
+</head>
+<body style="height: 100%">
+	<div id="app" style="height: 100%;margin: 0">
+		<div class="aside">
+			<el-row> 
+				<el-col :span="24"> 
+					<el-dropdown style="color: #FFF;height: 56px;line-height: 56px;width: 100%;background: #076197;"
+					placement="top-start"
+					>
+					  <span class="el-dropdown-link" style="margin-left: 21px;">
+					    {{userStore.state.user.name}}<i class="el-icon-caret-right el-icon--right"></i>
+					  </span>
+					  <el-dropdown-menu slot="dropdown">
+					    <el-dropdown-item icon="el-icon-edit-outline" 
+					    	@click.native="modifyPwdVisible = true">修改密码</el-dropdown-item>
+					    <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
+					  </el-dropdown-menu>
+					</el-dropdown>
+					
+					
+					<el-menu :default-active="activeIndex" mode="vertical" background-color="#0178be" text-color="#fff"
+					active-text-color="#ffd04b"> 
+					<template v-for="item in menu">
+						<el-menu-item v-if="$.isEmptyObject(item.children)"
+						@click="onNavigate(item)" :index="item.id">{{item.name}}</el-menu-item>
+
+						<el-submenu v-else :index="item.id"> 
+							<template slot="title">{{item.name}}</template> 
+							<template v-for="item1 in item.children"> 
+								<el-menu-item v-if="$.isEmptyObject(item1.children)" @click="onNavigate(item1)"
+								:index="item1.id">{{item1.name}}</el-menu-item> 
+								<el-submenu v-else :index="item1.id"> 
+									<template slot="title">{{item1.name}}</template>
+								</el-submenu> 
+							</template> 
+						</el-submenu> 
+					</template> 
+					</el-menu> </el-col> 
+				</el-row>
+		</div>
+		
+		<el-drawer
+		  title="修改密码"
+		  :visible.sync="modifyPwdVisible"
+		  :direction="direction">
+		  		<input style="display:none;" name="code" type="text" />
+		  		<input name = "password" type = "password" style = "display:none;" />
+			  <el-row class="form_line">
+				<el-col :span="4">
+					<span class="form_attr">新密码<span style="color:red">*</span></span>
+				</el-col>
+				<el-col :span="12">
+					<el-input auto-complete="new-password" v-model="newPassword" show-password placeholder="密码(英文和数字)"  maxlength="16"></el-input>
+				</el-col>
+			   </el-row>
+			   <el-row class="form_line">
+					<el-col :span="24">
+						<el-button style="margin-left: 12%;width: 51%;margin-top: 20px;" type="primary" 
+							@click="modifyPwd">修改密码</el-button>
+					</el-col>
+				</el-row>
+		</el-drawer>
+
+		<div class="container">
+			<div id="pageContent" class="pageContent"></div>
+		</div>
+		
+
+		
+		<div id="components" style="display: none"></div>
+
+	</div>
+</body>
+
+<style>
+.main_drop_down {
+	float: right;
+	position: absolute;
+	top: 0px;
+	right: 14px;
+	color: rgb(255, 255, 255);
+	line-height: 46px;
+	cursor: pointer;
+}
+</style>
+</html>
+

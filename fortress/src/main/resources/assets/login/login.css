@@ -1,0 +1,34 @@
+body{
+    background: url(/static/image/6bc61715bb3ae6501683d20cf1a50dbc.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#loginApp{
+	margin-top: 10%;
+}
+
+.line{
+	margin-top: 20px;
+}
+
+.line input{
+	height: 50px;
+	line-height: 50px;
+	font-size: 20px;
+}
+
+.line button{
+	height: 50px;
+	line-height: 50px;
+	font-size: 20px;
+	padding: 0;
+}
+
+.line p{
+    color: #fff8f8;
+    text-align: center;
+    font-size: 18px;
+}
+
+

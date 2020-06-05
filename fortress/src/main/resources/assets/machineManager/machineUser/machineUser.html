@@ -1,0 +1,96 @@
+<script type="text/x-template" id="machineUser">
+<div id="machineUser">
+	<el-row>
+		<el-col :span="24">
+			<el-input placeholder="用户名" v-model="user" class="form_input" @keyup.enter.native="queryMachineUserList" clearable>
+			</el-input>
+			<el-button @click="addNewMachineUser = true" icon="el-icon-user" type="primary">新增用户</el-button>
+		</el-col>
+	</el-row>
+
+	<el-row v-if="addUserVisible">
+		<el-col :span="24">
+			<el-input placeholder="用户名" v-model="user" class="form_input" @keyup.enter.native="queryMachineUserList" clearable>
+			</el-input>
+			<el-button icon="el-icon-user" type="primary">新增用户</el-button>
+		</el-col>
+	</el-row>	
+
+	<div style="margin-top: 10px;">
+		<el-table :data="machineList" fit border 
+			style="width: 100%;" v-loading="loading"
+			>
+		    <el-table-column
+		      prop="user"
+		      label="用户名"
+		      width="180">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="password"
+		      label="密码">
+		    </el-table-column>
+		    
+		    <el-table-column
+		      prop="create_user"
+		      label="操作">
+		      <template slot-scope="scope">
+				<el-button type="warning" @click="delMachineUser(scope.row)">删除</el-button>
+              </template>
+		    </el-table-column>
+		  </el-table>
+	</div>
+	
+	<el-drawer
+     title="新增用户"
+     :append-to-body="true"
+     :visible.sync="addNewMachineUser">
+		<el-row class="form_line">
+			<el-col :span="4">
+				<span class="form_attr">用户名<span style="color:red">*</span></span>
+			</el-col>
+			<el-col :span="12">
+				<el-input placeholder="用户名" v-model="newItem.user" ></el-input>
+			</el-col>
+		</el-row>
+
+		<el-row class="form_line">
+			<el-col :span="4">
+				<span class="form_attr">密码<span style="color:red">*</span></span>
+			</el-col>
+			<el-col :span="12">
+				<el-input placeholder="密码" v-model="newItem.password"></el-input>
+			</el-col>
+		</el-row>
+
+		
+		<el-button style="margin-left: 12%;width: 51%;margin-top: 20px;" type="primary" 
+					@click="addMachineUser">新增</el-button>
+   </el-drawer>
+</div>
+
+<style>
+@keyframes dialog-fade-in {
+        0% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes dialog-fade-out {
+        0% {
+            transform: translate3d(0, 0, 0);
+            opacity: 1;
+        }
+        100% {
+            transform: translate3d(-100%, 0, 0);
+            opacity: 0;
+        }
+    }
+    
+</style>
+</script>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SFTP-</title>
+    <script type="text/javascript" src="/static/jquery/jquery-3.0.0.js"></script>
+<script type="text/javascript" src="/static/vue/vue.min.js"></script>
+<script type="text/javascript" src="/static/vue/vuex.js"></script>
+<script type="text/javascript" src="/static/elementUI/element.min.js"></script>
+<script type="text/javascript" src="/static/leewan-common.js"></script>
+<script type="text/javascript" src="/static/leewan-router.js"></script>
+<script type="text/javascript" src="/static/store.js"></script>
+<script type="text/javascript" src="/static/vueExtend.js"></script>
+
+<link rel="stylesheet" href="/static/elementUI/element.min.css">
+<link rel="stylesheet" href="/static/css/common.css">
+</head>
+
+<body>
+	<div id="fileList" @click="menuVisible = false">
+	
+	<div v-show="menuVisible" style="z-index: 200000">
+    		<ul id="menu" style="z-index: 200000" class="menu">
+    				<li class="menu__item" 
+    				v-show="currentRow != null && currentRow.type==0"
+    				@click="downLoad">
+    					<i class="el-icon-download"></i>下载
+    				</li>
+    				<li class="menu__item"
+    				v-show="currentRow != null"
+    				@click="del">
+    					<i class="el-icon-delete-solid"></i>删除
+    				</li>
+    				<li class="menu__item"
+    				v-show="currentRow == null"
+    				@click="mkdir"
+    				>  
+    					<i class="el-icon-delete-solid"></i>新建文件夹
+    				</li>
+    		</ul>
+    </div>
+	
+  	<el-container>
+	  <el-aside class="aside" width="400px" v-bind:style="{ height: totalHeight + 'px' }">
+	  	<el-upload
+		  class="upload-demo"
+		  drag
+		  :headers="headers"
+		  action="/sftp/upload"
+		  :data="sftp"
+		  :on-success="uploadSuccess"
+		  :before-upload="beforeUpload"
+		  :on-change="onChange"
+		  multiple>
+		  
+		  <i class="el-icon-upload"></i>
+		  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+		</el-upload>
+	  </el-aside>
+	  <el-main class="main" @contextmenu.native="mkdirCmd">
+	  	<el-input v-model="sftp.path" class="path" v-bind:style="{ width: leftWidth + 'px' }" 
+	  	@keyup.enter.native="queryFileList">
+	  	<el-button slot="append" icon="el-icon-refresh" @click="queryFileList"></el-button>
+	  	</el-input>
+			<el-col :span="24" style="margin-top: 20px;top: 50px; position: absolute;" v-bind:style="{ width: leftWidth + 'px' }">
+				<el-table
+				ref="fileListTable"
+			      :data="fileList"
+			      style="width: 100%"
+			      highlight-current-row
+			      @row-dblclick="handleFile"
+			      @sort-change="sortChange"
+			      @row-contextmenu="rightClick"
+			      :default-sort = "{prop: 'name', order: 'descending'}"
+			      v-loading="loading">
+			      <el-table-column
+			        width="30">
+			        <template slot-scope="scope">
+			        	<img class="icon-folder" v-if="scope.row.type == FILE_TYPE_FOLDER" src="/static/svg/folder.svg">
+			        	<img class="icon-folder" v-else-if="scope.row.type == FILE_TYPE_FILE" src="/static/svg/file.svg">
+			        	<img class="icon-folder" v-else-if="scope.row.type == FILE_TYPE_LINK" src="/static/svg/link.svg">
+			        	<img class="icon-folder" v-else src="/static/svg/device.svg">
+	              	</template>
+			      </el-table-column>
+			      <el-table-column
+			      	:show-overflow-tooltip="true"
+			        label="名称"
+			        prop="name"
+			        sortable
+			        :sort-method="sortByName"
+			        width="300">
+			        <template slot-scope="scope">
+				      	<span class="file_name">{{scope.row.name}}</span>
+	              	</template>
+			      </el-table-column>
+			      <el-table-column
+			        prop="size"
+			        label="大小"
+			        sortable
+			        :sort-method="sortBySize"
+			        width="180">
+			        <template slot-scope="scope">
+			         	{{formatSize(scope.row)}}
+	              	</template>
+			        
+			      </el-table-column>
+			      <el-table-column
+			        prop="address"
+			        label="类型"
+			        width="100">
+			         <template slot-scope="scope">
+			         	<span v-if="scope.row.type == FILE_TYPE_FOLDER">文件夹</span>
+			        	<span v-else-if="scope.row.type == FILE_TYPE_FILE">文件</span>
+			        	<span v-else-if="scope.row.type == FILE_TYPE_LINK">链接</span>
+			        	<span v-else>其它</span>
+			        	
+	              	</template>
+			      </el-table-column>
+			      <el-table-column
+			        prop="modifyTime"
+			        sortable
+			        :sort-method="sortByTime"
+			        label="修改时间">
+			      </el-table-column>
+			      <el-table-column
+			        prop="permissions"
+			        label="属性">
+			      </el-table-column>
+			      <el-table-column
+			        prop="owner"
+			        label="所有者">
+			      </el-table-column>
+			    </el-table>
+			</el-col>
+	  </el-main>
+	</el-container>
+	</div>
+</body>
+</html>

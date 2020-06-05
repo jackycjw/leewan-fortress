@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<init>
+	<!-- 用户表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_users (
+			id  varchar(32) ,
+			code  varchar(255) ,
+			name  varchar(255) ,
+			password  varchar(255) ,
+			status  INT
+			)
+		</tableBuilding>
+		<sqls>
+			<sql>
+				INSERT INTO leewan_users (id, code, name, password, status) VALUES ('0', 'admin', '管理员', '4QrcOUm6Wau+VuBX8g+IPg==', 1)
+			</sql>
+		</sqls>
+	</table>
+	
+	<!-- 角色表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_roles (
+			id  varchar(32) NOT NULL,
+			name  varchar(255) ,
+			description  varchar(200) ,
+			PRIMARY KEY (id)
+			)
+		</tableBuilding>
+		<sqls>
+			<sql>
+				INSERT INTO leewan_roles (id, name, description) VALUES (0, '超级管理员', NULL)
+			</sql>
+			<sql>
+				INSERT INTO leewan_roles (id, name, description) VALUES (1, '普通用户', NULL)
+			</sql>
+		</sqls>
+	</table>
+	
+	<!-- 用户、角色关联表。 为admin用户授权管理员 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_user_role (
+			user_id  varchar(32) ,
+			role_id  varchar(32) ,
+			create_date  varchar(14) 
+			)
+		</tableBuilding>
+		<sqls>
+			<sql>
+				INSERT INTO leewan_user_role (user_id, role_id, create_date) VALUES (0, 0, NULL);
+			</sql>
+		</sqls>
+	</table>
+	
+	
+	<!-- 创建权限表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_authority (
+			  id int(11) NOT NULL,
+			  code varchar(20) ,
+			  name varchar(50) ,
+			  PRIMARY KEY (id)
+			)
+		</tableBuilding>
+		<sqls>
+			<sql>
+				INSERT INTO leewan_authority (id, code, name) VALUES (0, 'QUERY', '查询')
+			</sql>
+			<sql>
+				INSERT INTO leewan_authority (id, code, name) VALUES (1, 'ADMIN_ACTION', '管理员动作')
+			</sql>
+		</sqls>
+	</table>
+	
+	<!-- 创建角色、权限关联表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_role_authority (
+			role_id  varchar(32) ,
+			authority_id  varchar(32) 
+			)
+		</tableBuilding>
+		<sqls>
+			<sql>
+				INSERT INTO leewan_role_authority (role_id, authority_id) VALUES (0, 0)
+			</sql>
+			<sql>
+				INSERT INTO leewan_role_authority (role_id, authority_id) VALUES (0, 1)
+			</sql>
+		</sqls>
+	</table>
+	
+	
+	<!-- 机器列表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_machine (
+			id  varchar(32) NOT NULL,
+			host  varchar(100) NOT NULL,
+			remote_port  INTEGER,
+			system_type  INTEGER,
+			hostname  varchar(100),
+			PRIMARY KEY (id)
+			)
+		</tableBuilding>
+	</table>
+	
+	<!-- 机器用户列表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_machine_user (
+			id  varchar(32) NOT NULL,
+			machine_id  varchar(32) NOT NULL,
+			user  varchar(32),
+			password  varchar(100) NOT NULL,
+			PRIMARY KEY (id)
+			)
+		</tableBuilding>
+	</table>
+	
+	<!-- 用户机器关联表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_user_machine_user (
+			user_id  varchar(40) NOT NULL,
+			machine_user_id  varchar(40) NOT NULL
+			)
+		</tableBuilding>
+	</table>
+	
+	
+	<!-- 审计表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_operate_audit (
+			id  varchar(40),
+			user_id  varchar(32),
+			machine_user_id  varchar(32),
+			start_time  varchar(14),
+			end_time varchar(14),
+			audit_file  varchar(40)
+			)
+		</tableBuilding>
+	</table>
+	
+	<!-- SFTP日志表 -->
+	<table>
+		<tableBuilding>
+			CREATE TABLE leewan_sftp_log (
+			id  varchar(40),
+			path  varchar(500),
+			type  varchar(2),
+			user_id  varchar(32),
+			machine_user_id  varchar(32),
+			time  varchar(14)
+			)
+		</tableBuilding>
+	</table>
+	
+</init>

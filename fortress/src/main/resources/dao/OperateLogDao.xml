@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!--Converted at: Tue Apr 02 11:11:58 CST 2013-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leewan.dao.operate.OperateLogDao">
+	
+	<insert id="saveSftpOperate" parameterType="com.leewan.bean.SftpOperateBean">
+		INSERT INTO leewan_sftp_log (id, path, type, user_id, machine_user_id, time) 
+		VALUES 
+		(#{id}, #{path}, #{type}, #{userId}, #{machineUserId}, #{time});
+	</insert>
+	
+	
+	<resultMap type="map" id="sftpLog">
+		<result column="name" property="name"/>
+		<result column="hostname" property="hostname"/>
+		<result column="host" property="host"/>
+		<result column="user" property="user"/>
+		<result column="path" property="path"/>
+		<result column="type" property="type"/>
+		<result column="time" property="time" typeHandler="com.leewan.util.mybatis.StringDateTypeHandler"/>
+		
+	</resultMap>
+	
+	<select id="querySftpLog" parameterType="map" resultMap="sftpLog">
+		SELECT u.name, m.hostname, m.host, mu.user, sl.path, sl.type, sl.time from leewan_sftp_log sl 
+		LEFT JOIN leewan_users u on sl.user_id=u.id
+		LEFT JOIN leewan_machine_user mu on mu.id=sl.machine_user_id
+		LEFT JOIN leewan_machine m on m.id=mu.machine_id
+		<where>
+			<if test="name != null and name != ''">
+				and u.name like '%' || #{name} || '%'
+			</if>
+			<if test="type != null and type != ''">
+				and sl.type = #{type}
+			</if>
+			<if test="startTime != null and startTime != ''">
+				and sl.time &gt;= #{startTime}
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and sl.time &lt;= #{endTime}
+			</if>
+		</where>
+		order by sl.time desc
+	</select>
+
+</mapper>
