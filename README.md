@@ -1,7 +1,7 @@
 # leewan-fortress
-Linux堡垒机
+# Linux堡垒机
 
-一：提供以下功能 
+# 一：提供以下功能 
 
 1、SSH交互 
 
@@ -17,7 +17,7 @@ Linux堡垒机
 
 
 
-二：优点
+# 二：优点
 
 1、安装方便，可支持SQLite、MYSQL
 
@@ -26,7 +26,7 @@ Linux堡垒机
 2、安全审计功能
 
 
-三：使用：在Linux上无需配置就可使用，当然也可以对如下两项进行修改
+# 三：使用：在Linux上无需配置就可使用，当然也可以对如下两项进行修改
 
 1、数据库配置：默认使用SQLite，可在jar包中的 BOOT-INF\classes\application.properties中修改数据库相关配置（目前支持SQLite和MYSQL）
 
