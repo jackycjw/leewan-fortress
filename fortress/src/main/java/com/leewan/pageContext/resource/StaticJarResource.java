@@ -3,8 +3,13 @@ package com.leewan.pageContext.resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+
+import org.apache.commons.lang3.exception.ContextedException;
+
+import com.leewan.pageContext.except.ContextResourceException;
 
 public class StaticJarResource extends StaticResource {
 
@@ -14,7 +19,7 @@ public class StaticJarResource extends StaticResource {
 	
 	private long lastModifyTime;
 	
-	private String content;
+	private SoftReference<String> content;
 	
 	private String charset = "utf-8";
 	
@@ -24,7 +29,7 @@ public class StaticJarResource extends StaticResource {
 		StaticJarResource resource = new StaticJarResource();
 		resource.file = file;
 		resource.jarFile = jarFile;
-		resource.loadResource();
+		resource.resourceName = resource.file.getName();
 		return resource;
 	}
 	
@@ -38,7 +43,12 @@ public class StaticJarResource extends StaticResource {
 	private StaticJarResource() {
 	}
 	
-	private void loadResource() {
+	public long getFileModifyTime() {
+		return this.file.getLastModifiedTime().toMillis();
+	}
+	
+	
+	protected String readContent() {
 		try {
 			this.lastModifyTime = this.file.getLastModifiedTime().toMillis();
 			String name = this.file.getName();
@@ -47,19 +57,11 @@ public class StaticJarResource extends StaticResource {
 			InputStream in = this.jarFile.getInputStream(file);
 			byte[] bs = new byte[in.available()];
 			in.read(bs);
-			this.content = new String(bs, this.charset);
+			return new String(bs, this.charset);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ContextResourceException(e.getMessage(), e);
 		}
 	}
 	
-	public String getContent() {
-		long lastModified = this.file.getLastModifiedTime().toMillis();
-		if(lastModified != this.lastModifyTime) {
-			this.loadResource();
-		}
-		return content;
-	}
 	
 }

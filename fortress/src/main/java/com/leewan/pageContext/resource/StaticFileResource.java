@@ -3,14 +3,13 @@ package com.leewan.pageContext.resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
+
+import com.leewan.pageContext.except.ContextResourceException;
 
 public class StaticFileResource extends StaticResource {
 
 	private File file;
-	
-	private long lastModifyTime;
-	
-	private String content;
 	
 	private String charset = "utf-8";
 	
@@ -19,7 +18,7 @@ public class StaticFileResource extends StaticResource {
 	public static StaticFileResource createResource(File file) {
 		StaticFileResource resource = new StaticFileResource();
 		resource.file = file;
-		resource.loadResource();
+		resource.resourceName = resource.file.getName();
 		return resource;
 	}
 	
@@ -33,27 +32,22 @@ public class StaticFileResource extends StaticResource {
 	private StaticFileResource() {
 	}
 	
-	private void loadResource() {
+	public long getFileModifyTime() {
+		return this.file.lastModified();
+	}
+	
+	protected String readContent() {
 		try {
 			this.lastModifyTime = this.file.lastModified();
 			this.resourceName = this.file.getName();
 			InputStream in = new FileInputStream(file);
 			byte[] bs = new byte[in.available()];
 			in.read(bs);
-			this.content = new String(bs, this.charset);
+			return new String(bs, this.charset);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ContextResourceException(e.getMessage(), e);
 		}
 	}
 	
-	public String getContent() {
-		long lastModified = this.file.lastModified();
-		//閫氳繃淇敼鏃堕棿鍒ゆ柇鏂囦欢鏄惁闇�瑕侀噸鏂板姞杞�
-		if(lastModified != this.lastModifyTime) {
-			this.loadResource();
-		}
-		return content;
-	}
 	
 }

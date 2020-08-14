@@ -2,20 +2,10 @@ package com.leewan.pageContext;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.net.URL;
-import java.util.Enumeration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
-
-import com.leewan.pageContext.except.ContextException;
+import com.leewan.pageContext.except.ContextResourceException;
 import com.leewan.pageContext.resource.StaticResource;
 
 public class FilePageContext implements PageContext {
@@ -62,13 +52,6 @@ public class FilePageContext implements PageContext {
 		return false;
 	}
 	
-	private boolean isStaticResource(String name) {
-		if(name.endsWith(ContextConstant.HTML) || name.endsWith(ContextConstant.JS)
-				|| name.endsWith(ContextConstant.CSS)) {
-			return true;
-		}
-		return false;
-	}
 	
 	private String getJSResource(String name) {
 		String jsName = name + ContextConstant.JS;
@@ -112,7 +95,7 @@ public class FilePageContext implements PageContext {
 		}
 		StaticResource htmlRs = this.resource.get(htmlName);
 		if(htmlRs == null) {
-			throw new ContextException("resource: "+htmlName + " not found");
+			throw new ContextResourceException("resource: "+htmlName + " not found");
 		}
 		rs.append(htmlRs.getContent());
 		
