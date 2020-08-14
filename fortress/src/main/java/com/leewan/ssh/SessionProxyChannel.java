@@ -88,7 +88,7 @@ public class SessionProxyChannel {
 		channel.setOutputStream(out, true);
 		channel.connect(10 * 1000);
 		
-		this.auditFile = UID.getUUID();
+		this.auditFile = UID.getUUID()+"_audit.log";
 		this.id = UID.getUUID();
 		R param = R.ok().put("id", this.id).put("userId", UserUtils.getUser().getId())
 			.put("machineUserId", this.machineUserId).put("startTime", DateUtils.getNow())
